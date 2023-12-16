@@ -56,8 +56,8 @@ function handleSubmit() {
   onConversation()
 }
 
-async function onConversation() {
-  let message = prompt.value
+async function onConversation(msg = '') {
+  let message = prompt.value || msg
 
   if (loading.value)
     return
@@ -202,6 +202,12 @@ async function onConversation() {
     loading.value = false
   }
 }
+
+Object.defineProperty(window, '$send', {
+  get() {
+    return onConversation
+  },
+}) // define global function
 
 async function onRegenerate(index: number) {
   if (loading.value)
