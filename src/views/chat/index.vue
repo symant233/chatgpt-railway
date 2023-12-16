@@ -203,12 +203,6 @@ async function onConversation(msg = '') {
   }
 }
 
-Object.defineProperty(window, '$send', {
-  get() {
-    return onConversation
-  },
-}) // define global function
-
 async function onRegenerate(index: number) {
   if (loading.value)
     return
@@ -461,6 +455,12 @@ onMounted(() => {
   scrollToBottom()
   if (inputRef.value && !isMobile.value)
     inputRef.value?.focus()
+  Object.defineProperty(window, '$send', {
+    get() {
+      return onConversation
+    },
+    configurable: true,
+  }) // define global function
 })
 
 onUnmounted(() => {
